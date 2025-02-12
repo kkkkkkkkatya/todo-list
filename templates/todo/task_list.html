@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Todo List</h1>
+<a href=# class="btn btn-primary">Add Task</a>
+<ul>
+    {% for task in task_list %}
+    <li>
+        <strong>{{ task.content }}</strong> (Created: {{ task.created_at }})
+        {% if task.deadline %}
+            | Deadline: {{ task.deadline }}
+        {% endif %}
+        | Status: {% if task.is_done %} ✅ Done {% else %} ⏳ Pending {% endif %}
+
+        <a href=#>Edit</a> |
+        <a href=#>Delete</a> |
+        <a href="{% url 'toggle_task' task.pk %}">
+            {% if task.is_done %} Undo {% else %} Complete {% endif %}
+        </a>
+    </li>
+    {% empty %}
+    <p>No tasks yet.</p>
+    {% endfor %}
+</ul>
+{% endblock %}
+
